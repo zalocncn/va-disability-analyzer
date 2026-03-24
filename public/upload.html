@@ -236,20 +236,15 @@ let currentReport = null;
 (function checkPaymentReturn() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('paid') === 'true') {
-    const saved = sessionStorage.getItem('va_report');
-    if (saved) {
-      try {
-        const report = JSON.parse(saved);
-        window.history.replaceState({}, document.title, window.location.pathname);
-        renderReport(report, true);
-        resultSection.classList.add('active');
-        downloadBtn.style.display = 'flex';
-        sessionStorage.removeItem('va_report');
-        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } catch(e) {}
-    }
+    // User just returned from Stripe — store paid flag, clean URL, show upload form
+    sessionStorage.setItem('va_paid', 'true');
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
 })();
+
+function hasPaid() {
+  return sessionStorage.getItem('va_paid') === 'true';
+}
 
 fileInput.addEventListener('change', e => { const f = e.target.files[0]; if (f) selectFile(f); });
 uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
@@ -277,8 +272,10 @@ analyzeBtn.addEventListener('click', async () => {
     const res = await fetch('/api/analyze', { method: 'POST', body: formData });
     const data = await res.json();
     if (!res.ok || !data.success) throw new Error(data.error || 'Analysis failed. Please try again.');
-    sessionStorage.setItem('va_report', JSON.stringify(data.report));
-    renderReport(data.report, false);
+    const paid = hasPaid();
+    if (paid) sessionStorage.removeItem('va_paid');
+    renderReport(data.report, paid);
+    if (paid) downloadBtn.style.display = 'flex';
     loadingState.classList.remove('active');
     resultSection.classList.add('active');
     resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
