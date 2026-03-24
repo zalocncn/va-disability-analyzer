@@ -1,0 +1,10 @@
+{
+  "name": "va-disability-analyzer",
+  "version": "1.0.0",
+  "description": "VA disability claims analyzer for US veterans",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
+    "busboy": "^1.6.0",
+    "pdf-parse": "^1.1.1"
+  }
+}

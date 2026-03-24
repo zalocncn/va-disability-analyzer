@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VA Disability Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a18; --ink-2: #3d3d39; --ink-3: #6b6b65; --ink-4: #9a9a92;
+    --rule: #e4e2d8; --rule-light: #f0ede4; --page: #faf8f2; --white: #ffffff;
+    --accent: #1a3a5c; --accent-light: #e8eef5;
+    --green: #1a4a2e; --green-bg: #e8f2ec;
+    --amber: #5c3a0e; --amber-bg: #f5edde;
+    --gray-bg: #f0ede4; --gray-text: #5f5e58;
+    --danger: #8b1a1a; --danger-bg: #f5e8e8;
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  html { font-size: 16px; }
+  body { font-family: var(--sans); background: var(--page); color: var(--ink); min-height: 100vh; line-height: 1.6; }
+  .site-header { border-bottom: 1px solid var(--rule); background: var(--white); padding: 0 2rem; }
+  .header-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark { width: 36px; height: 36px; background: var(--accent); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-mark svg { width: 20px; height: 20px; }
+  .logo-text { font-family: var(--serif); font-size: 17px; font-weight: 400; color: var(--ink); letter-spacing: -0.01em; }
+  .header-badge { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); }
+  .hero { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--rule); }
+  .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(28px, 5vw, 44px); font-weight: 400; line-height: 1.15; color: var(--ink); max-width: 620px; margin-bottom: 1.25rem; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 16px; color: var(--ink-3); max-width: 560px; line-height: 1.65; }
+  .upload-section { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+  .upload-zone { border: 1.5px dashed var(--rule); border-radius: 12px; background: var(--white); padding: 3rem 2rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; }
+  .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: var(--accent-light); }
+  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .upload-icon { width: 48px; height: 48px; margin: 0 auto 1rem; background: var(--gray-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .upload-icon svg { width: 22px; height: 22px; color: var(--ink-3); }
+  .upload-zone h3 { font-family: var(--serif); font-size: 18px; font-weight: 400; margin-bottom: 6px; color: var(--ink); }
+  .upload-zone p { font-size: 14px; color: var(--ink-4); }
+  .upload-zone .file-name { margin-top: 12px; font-size: 13px; font-weight: 500; color: var(--accent); display: none; }
+  .analyze-btn { display: block; width: 100%; margin-top: 16px; padding: 14px; background: var(--accent); color: var(--white); font-family: var(--sans); font-size: 15px; font-weight: 500; border: none; border-radius: 8px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.01em; }
+  .analyze-btn:hover { opacity: 0.88; }
+  .analyze-btn:active { transform: scale(0.99); }
+  .analyze-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .privacy-note { margin-top: 12px; font-size: 12px; color: var(--ink-4); text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .privacy-note svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .loading-state { display: none; text-align: center; padding: 3rem 0; }
+  .loading-state.active { display: block; }
+  .spinner { width: 36px; height: 36px; border: 2.5px solid var(--rule); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 1.25rem; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-state h3 { font-family: var(--serif); font-size: 18px; font-weight: 400; color: var(--ink); margin-bottom: 6px; }
+  .loading-state p { font-size: 14px; color: var(--ink-4); }
+  .error-box { display: none; background: var(--danger-bg); border: 1px solid #e5c0c0; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; font-size: 14px; color: var(--danger); }
+  .error-box.active { display: block; }
+  .report-section { display: none; max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+  .report-section.active { display: block; }
+  .report-header { border-top: 3px solid var(--ink); padding-top: 2rem; margin-bottom: 2rem; }
+  .report-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+  .meta-pill { font-size: 11px; font-weight: 500; letter-spacing: 0.04em; background: var(--gray-bg); color: var(--gray-text); padding: 4px 10px; border-radius: 99px; }
+  .report-header h2 { font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--ink); margin-bottom: 4px; }
+  .report-date { font-size: 13px; color: var(--ink-4); }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2.5rem; }
+  .stat-card { background: var(--white); border: 1px solid var(--rule); border-radius: 10px; padding: 1rem 1.25rem; }
+  .stat-num { font-family: var(--serif); font-size: 32px; font-weight: 400; color: var(--ink); line-height: 1; }
+  .stat-lbl { font-size: 12px; color: var(--ink-4); margin-top: 4px; }
+  .summary-box { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2.5rem; }
+  .summary-box .summary-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .summary-box p { font-size: 15px; color: var(--ink-2); line-height: 1.65; }
+  .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin: 2rem 0 0.875rem; padding-bottom: 6px; border-bottom: 1px solid var(--rule-light); }
+  .claim-card { background: var(--white); border: 1px solid var(--rule); border-radius: 10px; padding: 1.125rem 1.375rem; margin-bottom: 10px; transition: border-color 0.15s; }
+  .claim-card:hover { border-color: #c8c5bb; }
+  .claim-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .claim-title { font-family: var(--serif); font-size: 16px; font-weight: 400; color: var(--ink); line-height: 1.3; }
+  .claim-dc { font-size: 11px; color: var(--ink-4); margin-top: 3px; letter-spacing: 0.01em; }
+  .strength-tag { flex-shrink: 0; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 99px; white-space: nowrap; }
+  .tag-strong { background: var(--green-bg); color: var(--green); }
+  .tag-moderate { background: var(--amber-bg); color: var(--amber); }
+  .tag-weak { background: var(--gray-bg); color: var(--gray-text); }
+  .claim-body { font-size: 13.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 10px; }
+  .evidence-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ev-pill { font-size: 11.5px; background: var(--rule-light); color: var(--ink-3); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--rule); }
+  .reset-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 2rem; font-size: 13px; color: var(--ink-4); background: none; border: 1px solid var(--rule); border-radius: 6px; padding: 8px 14px; cursor: pointer; font-family: var(--sans); transition: color 0.15s, border-color 0.15s; }
+  .reset-btn:hover { color: var(--ink); border-color: var(--ink-3); }
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 0; }
+  @media (max-width: 600px) {
+    .hero { padding: 2.5rem 1.25rem 2rem; }
+    .upload-section { padding: 2rem 1.25rem; }
+    .report-section { padding: 0 1.25rem 3rem; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .header-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" fill="white" opacity="0.9"/>
+        </svg>
+      </div>
+      <span class="logo-text">DisabilityReview</span>
+    </div>
+    <span class="header-badge">U.S. Veterans · VA Claims Analysis</span>
+  </div>
+</header>
+<section class="hero">
+  <p class="hero-eyebrow">Free · Confidential · Instant</p>
+  <h1>Know what VA disability benefits <em>you've earned</em></h1>
+  <p class="hero-sub">Upload your military medical record and receive a plain-language analysis of the service-connected disabilities you may be eligible to claim — mapped directly to VA rating criteria.</p>
+</section>
+<section class="upload-section">
+  <div class="upload-zone" id="uploadZone">
+    <input type="file" id="fileInput" accept=".pdf" />
+    <div class="upload-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14,2 14,8 20,8"/>
+        <line x1="12" y1="18" x2="12" y2="12"/>
+        <polyline points="9,15 12,12 15,15"/>
+      </svg>
+    </div>
+    <h3>Drop your medical record here</h3>
+    <p>PDF format — AHLTA, HAIMS, MTF records, or any DoD health record export</p>
+    <p class="file-name" id="fileName"></p>
+  </div>
+  <div class="error-box" id="errorBox"></div>
+  <button class="analyze-btn" id="analyzeBtn" disabled>Analyze my record</button>
+  <p class="privacy-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+    Your file is processed in memory only and never stored on our servers.
+  </p>
+  <div class="loading-state" id="loadingState">
+    <div class="spinner"></div>
+    <h3>Analyzing your record…</h3>
+    <p>Reviewing conditions, imaging, labs, and clinical notes against VA rating criteria.</p>
+  </div>
+</section>
+<hr class="rule">
+<section class="report-section" id="reportSection">
+  <div id="reportContent"></div>
+  <button class="reset-btn" id="resetBtn">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="1,4 1,10 7,10"/>
+      <path d="M3.51 15a9 9 0 1 0 .49-3.76"/>
+    </svg>
+    Analyze another record
+  </button>
+</section>
+<script>
+const fileInput = document.getElementById('fileInput');
+const uploadZone = document.getElementById('uploadZone');
+const fileName = document.getElementById('fileName');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const loadingState = document.getElementById('loadingState');
+const reportSection = document.getElementById('reportSection');
+const reportContent = document.getElementById('reportContent');
+const errorBox = document.getElementById('errorBox');
+const resetBtn = document.getElementById('resetBtn');
+let selectedFile = null;
+
+fileInput.addEventListener('change', e => { const f = e.target.files[0]; if (f) selectFile(f); });
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault(); uploadZone.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f && f.type === 'application/pdf') selectFile(f);
+  else showError('Please upload a PDF file.');
+});
+
+function selectFile(f) {
+  selectedFile = f;
+  fileName.textContent = f.name;
+  fileName.style.display = 'block';
+  analyzeBtn.disabled = false;
+  hideError();
+}
+
+analyzeBtn.addEventListener('click', async () => {
+  if (!selectedFile) return;
+  analyzeBtn.disabled = true;
+  uploadZone.style.pointerEvents = 'none';
+  uploadZone.style.opacity = '0.5';
+  loadingState.classList.add('active');
+  reportSection.classList.remove('active');
+  hideError();
+  const formData = new FormData();
+  formData.append('medical_record', selectedFile);
+  try {
+    const res = await fetch('/api/analyze', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'Analysis failed. Please try again.');
+    renderReport(data.report);
+    loadingState.classList.remove('active');
+    reportSection.classList.add('active');
+    reportSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (err) {
+    loadingState.classList.remove('active');
+    uploadZone.style.pointerEvents = '';
+    uploadZone.style.opacity = '';
+    analyzeBtn.disabled = false;
+    showError(err.message);
+  }
+});
+
+resetBtn.addEventListener('click', () => {
+  selectedFile = null; fileInput.value = '';
+  fileName.style.display = 'none'; analyzeBtn.disabled = true;
+  reportSection.classList.remove('active');
+  uploadZone.style.pointerEvents = ''; uploadZone.style.opacity = '';
+  hideError(); window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+function showError(msg) { errorBox.textContent = msg; errorBox.classList.add('active'); }
+function hideError() { errorBox.classList.remove('active'); errorBox.textContent = ''; }
+function strengthClass(s) { if (s === 'Strong') return 'tag-strong'; if (s === 'Moderate') return 'tag-moderate'; return 'tag-weak'; }
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderReport(r) {
+  const claims = r.claims || [];
+  const strong = claims.filter(c => c.strength === 'Strong');
+  const moderate = claims.filter(c => c.strength === 'Moderate');
+  const weak = claims.filter(c => c.strength === 'Weak');
+
+  function claimHTML(c) {
+    const pills = (c.evidence || []).map(e => `<span class="ev-pill">${esc(e)}</span>`).join('');
+    return `<div class="claim-card">
+      <div class="claim-top">
+        <div><div class="claim-title">${esc(c.title)}</div><div class="claim-dc">${esc(c.diagnostic_code || '')}</div></div>
+        <span class="strength-tag ${strengthClass(c.strength)}">${esc(c.strength)}</span>
+      </div>
+      <p class="claim-body">${esc(c.explanation)}</p>
+      <div class="evidence-row">${pills}</div>
+    </div>`;
+  }
+
+  function section(label, items) {
+    if (!items.length) return '';
+    return `<div class="section-label">${label}</div>${items.map(claimHTML).join('')}`;
+  }
+
+  const metaPills = [r.branch, r.mos, r.record_period, r.facility].filter(Boolean)
+    .map(v => `<span class="meta-pill">${esc(v)}</span>`).join('');
+
+  reportContent.innerHTML = `
+    <div class="report-header">
+      <div class="report-meta">${metaPills}</div>
+      <h2>${esc(r.veteran_name || 'Veteran')}</h2>
+      <p class="report-date">Analysis generated ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">${r.total_claims || claims.length}</div><div class="stat-lbl">Potential claims identified</div></div>
+      <div class="stat-card"><div class="stat-num">${r.strong_count || strong.length}</div><div class="stat-lbl">Strong service connections</div></div>
+      <div class="stat-card"><div class="stat-num">${(r.moderate_count || moderate.length) + (r.weak_count || weak.length)}</div><div class="stat-lbl">Supporting or secondary</div></div>
+    </div>
+    ${r.summary ? `<div class="summary-box"><div class="summary-label">Key findings</div><p>${esc(r.summary)}</p></div>` : ''}
+    ${section('Strong service-connection claims', strong)}
+    ${section('Moderate claims', moderate)}
+    ${section('Weaker or secondary claims', weak)}
+  `;
+}
+</script>
+</body>
+</html>
