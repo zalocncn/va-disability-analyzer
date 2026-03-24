@@ -21,8 +21,6 @@
 }
 html { font-size: 16px; scroll-behavior: smooth; }
 body { font-family: var(--sans); background: var(--page); color: var(--ink); min-height: 100vh; line-height: 1.6; }
-
-/* ── Header / Nav ── */
 .site-header { border-bottom: 1px solid var(--rule); background: var(--white); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
 .header-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
@@ -33,18 +31,10 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 .nav-link { font-size: 14px; color: var(--ink-3); text-decoration: none; transition: color 0.15s; }
 .nav-link:hover { color: var(--ink); }
 .nav-link.active { color: var(--accent); font-weight: 500; }
-.header-cta { background: var(--accent); color: var(--white); font-family: var(--sans); font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 6px; text-decoration: none; transition: opacity 0.2s; }
-.header-cta:hover { opacity: 0.85; }
-</style>
-</head>
-<style>
-/* ── Page layout ── */
 .page-body { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem 5rem; }
 .page-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
 .page-heading { font-family: var(--serif); font-size: clamp(26px, 4vw, 38px); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 10px; }
 .page-sub { font-size: 15px; color: var(--ink-3); line-height: 1.65; max-width: 540px; margin-bottom: 2.5rem; }
-
-/* ── Upload zone ── */
 .upload-zone { border: 1.5px dashed var(--rule); border-radius: 12px; background: var(--white); padding: 3rem 2rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; max-width: 620px; }
 .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: var(--accent-light); }
 .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
@@ -58,8 +48,6 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 .analyze-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .privacy-note { margin-top: 10px; font-size: 12px; color: var(--ink-4); display: flex; align-items: center; gap: 6px; max-width: 620px; }
 .privacy-note svg { width: 12px; height: 12px; flex-shrink: 0; }
-
-/* ── Loading ── */
 .loading-state { display: none; padding: 3rem 0; max-width: 620px; }
 .loading-state.active { display: block; }
 .spinner-wrap { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
@@ -67,17 +55,11 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-state h3 { font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--ink); margin-bottom: 4px; text-align: center; }
 .loading-state p { font-size: 14px; color: var(--ink-4); text-align: center; }
-
-/* ── Error ── */
 .error-box { display: none; background: var(--danger-bg); border: 1px solid #e5c0c0; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; font-size: 14px; color: var(--danger); max-width: 620px; }
 .error-box.active { display: block; }
-
-/* ── Result ── */
 .result-section { display: none; margin-top: 3rem; }
 .result-section.active { display: block; }
 .result-report-box { background: var(--white); border: 1px solid var(--rule); border-radius: 16px; padding: 2.5rem; }
-
-/* Report internals */
 .report-header { border-top: 3px solid var(--ink); padding-top: 2rem; margin-bottom: 2rem; }
 .report-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
 .meta-pill { font-size: 11px; font-weight: 500; letter-spacing: 0.04em; background: var(--gray-bg); color: var(--gray-text); padding: 4px 10px; border-radius: 99px; }
@@ -102,9 +84,6 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 .claim-body { font-size: 13.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 10px; }
 .evidence-row { display: flex; flex-wrap: wrap; gap: 6px; }
 .ev-pill { font-size: 11.5px; background: var(--white); color: var(--ink-3); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--rule); }
-</style>
-
-/* ── Paywall ── */
 .paywall-wrapper { position: relative; }
 .blurred-content { filter: blur(7px); user-select: none; pointer-events: none; }
 .paywall-gate {
@@ -132,16 +111,14 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 .pay-btn:hover { opacity: 0.88; }
 .paywall-trust { font-size: 11px; color: var(--ink-4); display: flex; align-items: center; justify-content: center; gap: 5px; }
 .paywall-trust svg { width: 11px; height: 11px; }
-
-/* ── Download btn ── */
 .download-btn { display: none; align-items: center; justify-content: center; gap: 10px; margin-top: 2.5rem; width: 100%; padding: 16px 24px; background: var(--accent); color: var(--white); font-family: var(--sans); font-size: 16px; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; transition: opacity 0.2s; }
 .download-btn:hover { opacity: 0.88; }
-
 @media (max-width: 640px) {
   .page-body { padding: 2.5rem 1.25rem 3rem; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .result-report-box { padding: 1.5rem; }
   .nav-links .nav-link { display: none; }
+  .nav-links .nav-link.active { display: block; }
 }
 </style>
 </head>
@@ -236,15 +213,12 @@ let currentReport = null;
 (function checkPaymentReturn() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('paid') === 'true') {
-    // User just returned from Stripe — store paid flag, clean URL, show upload form
     sessionStorage.setItem('va_paid', 'true');
     window.history.replaceState({}, document.title, window.location.pathname);
   }
 })();
 
-function hasPaid() {
-  return sessionStorage.getItem('va_paid') === 'true';
-}
+function hasPaid() { return sessionStorage.getItem('va_paid') === 'true'; }
 
 fileInput.addEventListener('change', e => { const f = e.target.files[0]; if (f) selectFile(f); });
 uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
