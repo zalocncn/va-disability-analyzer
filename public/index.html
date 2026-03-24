@@ -98,6 +98,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 .claim-body { font-size: 13.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 10px; }
 .evidence-row { display: flex; flex-wrap: wrap; gap: 6px; }
 .ev-pill { font-size: 11.5px; background: var(--white); color: var(--ink-3); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--rule); }
+.theory-pill { font-size: 11.5px; background: var(--accent-light); color: var(--accent); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--accent-light); }
 
 /* ── Upload section ── */
 .upload-wrapper { max-width: 1000px; margin: 0 auto; padding: 0 2rem 5rem; }
@@ -266,6 +267,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">L2 compression fracture sustained in IED blast (Sep 2014) with continuous treatment documented across three commands. X-ray, CT, and MRI imaging all on file. Persistent pain rated 6/10 at final separation physical. Treated with physical therapy, naproxen, and cyclobenzaprine throughout remainder of service.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Direct §3.303 — in-service IED blast</span>
         <span class="ev-pill">CT L-spine (Oct 2014) — fracture confirmed</span>
         <span class="ev-pill">MRI L-spine (Mar 2017) — disc desiccation L3-L4</span>
         <span class="ev-pill">30+ PT sessions documented</span>
@@ -283,6 +285,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">Diagnosed with mild TBI following loss of consciousness at blast site. Neuropsychological evaluation at BAMC confirmed cognitive deficits in processing speed and working memory. Persistent headaches documented at 3–4 per week in follow-up notes. No prior head injury documented at accession.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Direct §3.303 — loss of consciousness at blast</span>
         <span class="ev-pill">Blast event documented in medical record</span>
         <span class="ev-pill">Neuropsychology eval (Jan 2015)</span>
         <span class="ev-pill">Cognitive deficits on standardized testing</span>
@@ -300,6 +303,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">Baseline audiogram on entry (Jan 2010) was within normal limits. Annual hearing conservation audiogram in 2016 documented a positive Standard Threshold Shift bilaterally. MOS 11B Infantry involves continuous exposure to weapons fire, explosives, and heavy vehicle noise — a qualifying occupational exposure under VA adjudication guidelines.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Direct §3.303 — MOS noise exposure + blast</span>
         <span class="ev-pill">Baseline audiogram Jan 2010 — normal</span>
         <span class="ev-pill">Failed audiogram + bilateral STS (2016)</span>
         <span class="ev-pill">MOS 11B — continuous noise exposure</span>
@@ -317,6 +321,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">Tinnitus reported at post-deployment health reassessment following 2014 deployment and again at separation physical. Combined with MOS noise exposure and IED blast history, this is among the most consistently granted VA claims for combat infantry veterans. Rated at 10% as a standalone condition.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Direct §3.303 — acoustic trauma, MOS 11B</span>
         <span class="ev-pill">Post-deployment PDHRA documentation</span>
         <span class="ev-pill">Reported at separation physical (2018)</span>
         <span class="ev-pill">IED blast — acoustic trauma</span>
@@ -333,6 +338,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">Referred to sleep clinic with Epworth Sleepiness Scale score of 21/24. Witnessed apneic events documented by provider. Home sleep study ordered at separation. If CPAP is required, VA rates this at 50% — making it the single highest-rated potential claim in this record. Can also be claimed as secondary to TBI.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Direct §3.303 / Secondary §3.310 to TBI</span>
         <span class="ev-pill">Epworth 21/24 (severe)</span>
         <span class="ev-pill">Sleep study ordered at separation</span>
         <span class="ev-pill">Witnessed apneic events documented</span>
@@ -352,6 +358,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">Diagnosed in 2016 following a training run injury. MRI confirmed chondromalacia patella and joint effusion. Physical therapy notes document functional limitations with prolonged standing, stairs, and load-bearing. Continuity of care is solid but the injury was not tied to combat, making the nexus slightly softer than blast-related claims.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Direct §3.303 — in-service training injury</span>
         <span class="ev-pill">MRI right knee (Aug 2016)</span>
         <span class="ev-pill">Chondromalacia confirmed on imaging</span>
         <span class="ev-pill">14 PT sessions</span>
@@ -368,6 +375,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">PCM notes reference anxiety and sleep disturbance following 2014 deployment. Formal PTSD diagnosis not present in this record, but PHQ-2 was positive on two post-deployment screenings. A formal PTSD diagnosis via a C&P exam with a documented in-service stressor (IED blast) would substantially strengthen this claim.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Direct §3.304(f) — combat stressor</span>
         <span class="ev-pill">PHQ-2 positive × 2 post-deployment</span>
         <span class="ev-pill">PCM anxiety/sleep disturbance notes</span>
         <span class="ev-pill">Documented in-service stressor (IED)</span>
@@ -386,6 +394,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">Headaches documented as a TBI residual, but frequency and severity records are inconsistent — some visits show 1–2/week, others show 3–4/week. If a nexus letter from a treating neurologist links the migraines directly to the TBI, this secondary claim strengthens considerably. As-is, the inconsistency may limit the rating.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Secondary §3.310 — residual of TBI DC 8045</span>
         <span class="ev-pill">TBI diagnosis on file</span>
         <span class="ev-pill">Headache medication prescribed</span>
         <span class="ev-pill">Inconsistent frequency documentation</span>
@@ -402,6 +411,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <p class="claim-body">Two episodes of shooting pain down the right leg documented in physical therapy notes in 2017. EMG was not performed. A formal EMG/NCV study showing radiculopathy would convert this to a strong secondary claim. Without it, the claim relies on clinical documentation alone which is viable but will likely require a nexus letter.</p>
       <div class="evidence-row">
+        <span class="theory-pill">Secondary §3.310 — lumbar fracture DC 5235</span>
         <span class="ev-pill">Shooting right leg pain × 2 (2017 PT notes)</span>
         <span class="ev-pill">Lumbar fracture confirmed</span>
         <span class="ev-pill">No EMG on file</span>
