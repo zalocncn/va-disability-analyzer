@@ -285,13 +285,14 @@ function renderReport(r, unlocked) {
 
   function claimHTML(c) {
     const pills = (c.evidence || []).map(e => `<span class="ev-pill">${esc(e)}</span>`).join('');
+    const theory = c.service_connection_theory ? `<span class="ev-pill" style="background:var(--accent-light);color:var(--accent);border-color:var(--accent-light)">${esc(c.service_connection_theory)}</span>` : '';
     return `<div class="claim-card">
       <div class="claim-top">
         <div><div class="claim-title">${esc(c.title)}</div><div class="claim-dc">${esc(c.diagnostic_code||'')}</div></div>
         <span class="strength-tag ${strengthClass(c.strength)}">${esc(c.strength)}</span>
       </div>
       <p class="claim-body">${esc(c.explanation)}</p>
-      <div class="evidence-row">${pills}</div>
+      <div class="evidence-row">${theory}${pills}</div>
     </div>`;
   }
 
