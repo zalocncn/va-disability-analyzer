@@ -83,7 +83,7 @@
   .claim-body { font-size: 13.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 10px; }
   .evidence-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .ev-pill { font-size: 11.5px; background: var(--rule-light); color: var(--ink-3); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--rule); }
-  .download-btn { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 2.5rem; width: 100%; padding: 16px 24px; background: var(--accent); color: var(--white); font-family: var(--sans); font-size: 16px; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.01em; }
+  .download-btn { display: none; align-items: center; justify-content: center; gap: 10px; margin-top: 2.5rem; width: 100%; padding: 16px 24px; background: var(--accent); color: var(--white); font-family: var(--sans); font-size: 16px; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.01em; }
   .download-btn:hover { opacity: 0.88; }
   .download-btn:active { transform: scale(0.99); }
   .rule { border: none; border-top: 1px solid var(--rule); margin: 0; }
@@ -199,6 +199,29 @@ const errorBox = document.getElementById('errorBox');
 const downloadBtn = document.getElementById('downloadBtn');
 let selectedFile = null;
 
+// On page load: if returning from Stripe with ?paid=true, restore report and unlock
+(function checkPaymentReturn() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('paid') === 'true') {
+    const saved = sessionStorage.getItem('va_report');
+    if (saved) {
+      try {
+        const report = JSON.parse(saved);
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        // Hide upload section, show full unlocked report
+        document.querySelector('.hero').style.display = 'none';
+        document.querySelector('.upload-section').style.display = 'none';
+        document.querySelector('.rule').style.display = 'none';
+        renderReport(report, true);
+        reportSection.classList.add('active');
+        downloadBtn.style.display = 'flex';
+        sessionStorage.removeItem('va_report');
+      } catch(e) { /* parse error, ignore */ }
+    }
+  }
+})();
+
 fileInput.addEventListener('change', e => { const f = e.target.files[0]; if (f) selectFile(f); });
 uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
@@ -231,7 +254,8 @@ analyzeBtn.addEventListener('click', async () => {
     const res = await fetch('/api/analyze', { method: 'POST', body: formData });
     const data = await res.json();
     if (!res.ok || !data.success) throw new Error(data.error || 'Analysis failed. Please try again.');
-    renderReport(data.report);
+    sessionStorage.setItem('va_report', JSON.stringify(data.report));
+    renderReport(data.report, false);
     loadingState.classList.remove('active');
     reportSection.classList.add('active');
     reportSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -272,7 +296,7 @@ function esc(str) {
 }
 
 let currentReport = null;
-function renderReport(r) {
+function renderReport(r, unlocked) {
   currentReport = r;
   const claims = r.claims || [];
   const strong = claims.filter(c => c.strength === 'Strong');
@@ -305,7 +329,7 @@ function renderReport(r) {
     section('Moderate claims', moderate) +
     section('Weaker or secondary claims', weak);
 
-  reportContent.innerHTML = `
+  const headerAndStats = `
     <div class="report-header">
       <div class="report-meta">${metaPills}</div>
       <h2>${esc(r.veteran_name || 'Veteran')}</h2>
@@ -315,7 +339,12 @@ function renderReport(r) {
       <div class="stat-card"><div class="stat-num">${r.total_claims || claims.length}</div><div class="stat-lbl">Potential claims identified</div></div>
       <div class="stat-card"><div class="stat-num">${r.strong_count || strong.length}</div><div class="stat-lbl">Strong service connections</div></div>
       <div class="stat-card"><div class="stat-num">${(r.moderate_count || moderate.length) + (r.weak_count || weak.length)}</div><div class="stat-lbl">Supporting or secondary</div></div>
-    </div>
+    </div>`;
+
+  if (unlocked) {
+    reportContent.innerHTML = headerAndStats + blurredHTML;
+  } else {
+    reportContent.innerHTML = headerAndStats + `
     <div class="paywall-wrapper">
       <div class="blurred-content">${blurredHTML}</div>
       <div class="paywall-gate">
@@ -345,8 +374,8 @@ function renderReport(r) {
           </p>
         </div>
       </div>
-    </div>
-  `;
+    </div>`;
+  }
 }
 </script>
 </body>
