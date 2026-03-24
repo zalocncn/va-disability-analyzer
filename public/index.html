@@ -83,8 +83,9 @@
   .claim-body { font-size: 13.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 10px; }
   .evidence-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .ev-pill { font-size: 11.5px; background: var(--rule-light); color: var(--ink-3); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--rule); }
-  .reset-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 2rem; font-size: 13px; color: var(--ink-4); background: none; border: 1px solid var(--rule); border-radius: 6px; padding: 8px 14px; cursor: pointer; font-family: var(--sans); transition: color 0.15s, border-color 0.15s; }
-  .reset-btn:hover { color: var(--ink); border-color: var(--ink-3); }
+  .download-btn { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 2.5rem; width: 100%; padding: 16px 24px; background: var(--accent); color: var(--white); font-family: var(--sans); font-size: 16px; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.01em; }
+  .download-btn:hover { opacity: 0.88; }
+  .download-btn:active { transform: scale(0.99); }
   .rule { border: none; border-top: 1px solid var(--rule); margin: 0; }
   @media (max-width: 600px) {
     .hero { padding: 2.5rem 1.25rem 2rem; }
@@ -147,12 +148,13 @@
 <hr class="rule">
 <section class="report-section" id="reportSection">
   <div id="reportContent"></div>
-  <button class="reset-btn" id="resetBtn">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polyline points="1,4 1,10 7,10"/>
-      <path d="M3.51 15a9 9 0 1 0 .49-3.76"/>
+  <button class="download-btn" id="downloadBtn">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7,10 12,15 17,10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
     </svg>
-    Analyze another record
+    Download Report
   </button>
 </section>
 <script>
@@ -164,7 +166,7 @@ const loadingState = document.getElementById('loadingState');
 const reportSection = document.getElementById('reportSection');
 const reportContent = document.getElementById('reportContent');
 const errorBox = document.getElementById('errorBox');
-const resetBtn = document.getElementById('resetBtn');
+const downloadBtn = document.getElementById('downloadBtn');
 let selectedFile = null;
 
 fileInput.addEventListener('change', e => { const f = e.target.files[0]; if (f) selectFile(f); });
@@ -212,12 +214,14 @@ analyzeBtn.addEventListener('click', async () => {
   }
 });
 
-resetBtn.addEventListener('click', () => {
-  selectedFile = null; fileInput.value = '';
-  fileName.style.display = 'none'; analyzeBtn.disabled = true;
-  reportSection.classList.remove('active');
-  uploadZone.style.pointerEvents = ''; uploadZone.style.opacity = '';
-  hideError(); window.scrollTo({ top: 0, behavior: 'smooth' });
+downloadBtn.addEventListener('click', () => {
+  const name = currentReport && currentReport.veteran_name ? currentReport.veteran_name.replace(/[^a-z0-9]/gi, '_') : 'VA_Report';
+  const content = document.getElementById('reportContent').innerText;
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name + '_VA_Disability_Report.txt';
+  a.click(); URL.revokeObjectURL(url);
 });
 
 function showError(msg) { errorBox.textContent = msg; errorBox.classList.add('active'); }
@@ -228,7 +232,9 @@ function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+let currentReport = null;
 function renderReport(r) {
+  currentReport = r;
   const claims = r.claims || [];
   const strong = claims.filter(c => c.strength === 'Strong');
   const moderate = claims.filter(c => c.strength === 'Moderate');
