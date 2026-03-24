@@ -67,12 +67,89 @@
   .stat-card { background: var(--white); border: 1px solid var(--rule); border-radius: 10px; padding: 1rem 1.25rem; }
   .stat-num { font-family: var(--serif); font-size: 32px; font-weight: 400; color: var(--ink); line-height: 1; }
   .stat-lbl { font-size: 12px; color: var(--ink-4); margin-top: 4px; }
+</style>
+</head>
+  /* ── Paywall ── */
+  .paywall-wrapper { position: relative; }
+  .blurred-content { filter: blur(6px); user-select: none; pointer-events: none; }
+  .paywall-gate {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 60px;
+    background: linear-gradient(to bottom, rgba(250,248,242,0) 0%, rgba(250,248,242,0.7) 18%, rgba(250,248,242,1) 38%);
+  }
+  .paywall-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 4px 32px rgba(26,26,24,0.08);
+  }
+  .paywall-icon {
+    width: 52px; height: 52px;
+    background: var(--accent-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.125rem;
+  }
+  .paywall-icon svg { width: 24px; height: 24px; color: var(--accent); }
+  .paywall-card h3 {
+    font-family: var(--serif);
+    font-size: 20px; font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .paywall-card p {
+    font-size: 14px; color: var(--ink-3);
+    line-height: 1.65; margin-bottom: 1.5rem;
+  }
+  .paywall-price {
+    display: flex; align-items: baseline;
+    justify-content: center; gap: 4px;
+    margin-bottom: 1.25rem;
+  }
+  .price-amount { font-family: var(--serif); font-size: 40px; font-weight: 700; color: var(--ink); }
+  .price-cents { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--ink); }
+  .price-label { font-size: 13px; color: var(--ink-4); margin-left: 4px; }
+  .pay-btn {
+    display: block; width: 100%;
+    padding: 14px;
+    background: var(--accent); color: var(--white);
+    font-family: var(--sans); font-size: 15px; font-weight: 500;
+    border: none; border-radius: 8px; cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    margin-bottom: 12px;
+  }
+  .pay-btn:hover { opacity: 0.88; }
+  .paywall-trust {
+    font-size: 11px; color: var(--ink-4);
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .paywall-trust svg { width: 11px; height: 11px; }
+  .paywall-includes {
+    display: flex; flex-direction: column; gap: 6px;
+    margin-bottom: 1.5rem; text-align: left;
+  }
+  .include-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--ink-2);
+  }
+  .include-row svg { width: 14px; height: 14px; color: var(--green); flex-shrink: 0; }
+
+  /* Claimed preview styling for blurred section */
   .summary-box { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2.5rem; }
   .summary-box .summary-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
   .summary-box p { font-size: 15px; color: var(--ink-2); line-height: 1.65; }
   .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin: 2rem 0 0.875rem; padding-bottom: 6px; border-bottom: 1px solid var(--rule-light); }
-  .claim-card { background: var(--white); border: 1px solid var(--rule); border-radius: 10px; padding: 1.125rem 1.375rem; margin-bottom: 10px; transition: border-color 0.15s; }
-  .claim-card:hover { border-color: #c8c5bb; }
+  .claim-card { background: var(--white); border: 1px solid var(--rule); border-radius: 10px; padding: 1.125rem 1.375rem; margin-bottom: 10px; }
   .claim-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
   .claim-title { font-family: var(--serif); font-size: 16px; font-weight: 400; color: var(--ink); line-height: 1.3; }
   .claim-dc { font-size: 11px; color: var(--ink-4); margin-top: 3px; letter-spacing: 0.01em; }
@@ -92,6 +169,7 @@
     .report-section { padding: 0 1.25rem 3rem; }
     .stats-row { grid-template-columns: 1fr 1fr; }
     .header-badge { display: none; }
+    .paywall-card { padding: 1.5rem; }
   }
 </style>
 </head>
@@ -109,11 +187,13 @@
     <span class="header-badge">U.S. Veterans · VA Claims Analysis</span>
   </div>
 </header>
+
 <section class="hero">
   <p class="hero-eyebrow">Free · Confidential · Instant</p>
   <h1>Know what VA disability benefits <em>you've earned</em></h1>
   <p class="hero-sub">Upload your military medical record and receive a plain-language analysis of the service-connected disabilities you may be eligible to claim — mapped directly to VA rating criteria.</p>
 </section>
+
 <section class="upload-section">
   <div class="upload-zone" id="uploadZone">
     <input type="file" id="fileInput" accept=".pdf" />
@@ -144,7 +224,9 @@
     <p>Reviewing conditions, imaging, labs, and clinical notes against VA rating criteria.</p>
   </div>
 </section>
+
 <hr class="rule">
+
 <section class="report-section" id="reportSection">
   <div id="reportContent"></div>
   <button class="reset-btn" id="resetBtn">
@@ -155,7 +237,9 @@
     Analyze another record
   </button>
 </section>
+
 <script>
+const STRIPE_LINK = 'https://buy.stripe.com/bJe00j7tG90Kc1vfDzbV607';
 const fileInput = document.getElementById('fileInput');
 const uploadZone = document.getElementById('uploadZone');
 const fileName = document.getElementById('fileName');
@@ -254,6 +338,58 @@ function renderReport(r) {
   const metaPills = [r.branch, r.mos, r.record_period, r.facility].filter(Boolean)
     .map(v => `<span class="meta-pill">${esc(v)}</span>`).join('');
 
+  const blurredHTML = `
+    ${r.summary ? `<div class="summary-box"><div class="summary-label">Key findings</div><p>${esc(r.summary)}</p></div>` : ''}
+    ${section('Strong service-connection claims', strong)}
+    ${section('Moderate claims', moderate)}
+    ${section('Weaker or secondary claims', weak)}
+  `;
+
+  const paywallCard = `
+    <div class="paywall-gate">
+      <div class="paywall-card">
+        <div class="paywall-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <h3>Your full report is ready</h3>
+        <p>Unlock your complete VA disability analysis — every claim, evidence item, and diagnostic code mapped to your record.</p>
+        <div class="paywall-includes">
+          <div class="include-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+            All ${claims.length} potential claims with full explanations
+          </div>
+          <div class="include-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+            VA Diagnostic Codes &amp; CFR citations
+          </div>
+          <div class="include-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+            Supporting evidence pulled from your record
+          </div>
+          <div class="include-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+            Instant access — no account required
+          </div>
+        </div>
+        <div class="paywall-price">
+          <span class="price-amount">$4</span>
+          <span class="price-cents">.99</span>
+          <span class="price-label">one-time</span>
+        </div>
+        <a href="${STRIPE_LINK}" target="_blank" class="pay-btn">Unlock full report →</a>
+        <p class="paywall-trust">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Secure checkout · Powered by Stripe
+        </p>
+      </div>
+    </div>
+  `;
+
   reportContent.innerHTML = `
     <div class="report-header">
       <div class="report-meta">${metaPills}</div>
@@ -265,10 +401,10 @@ function renderReport(r) {
       <div class="stat-card"><div class="stat-num">${r.strong_count || strong.length}</div><div class="stat-lbl">Strong service connections</div></div>
       <div class="stat-card"><div class="stat-num">${(r.moderate_count || moderate.length) + (r.weak_count || weak.length)}</div><div class="stat-lbl">Supporting or secondary</div></div>
     </div>
-    ${r.summary ? `<div class="summary-box"><div class="summary-label">Key findings</div><p>${esc(r.summary)}</p></div>` : ''}
-    ${section('Strong service-connection claims', strong)}
-    ${section('Moderate claims', moderate)}
-    ${section('Weaker or secondary claims', weak)}
+    <div class="paywall-wrapper">
+      <div class="blurred-content">${blurredHTML}</div>
+      ${paywallCard}
+    </div>
   `;
 }
 </script>
