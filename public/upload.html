@@ -162,19 +162,6 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 .tag-strong { background: var(--green-bg); color: var(--green); }
 .tag-moderate { background: var(--amber-bg); color: var(--amber); }
 .tag-weak { background: var(--gray-bg); color: var(--gray-text); }
-/* ── RATING BADGE ── */
-.rating-badge {
-  font-size: 12px;
-  font-weight: 500;
-  font-family: var(--serif);
-  background: var(--accent);
-  color: #ffffff;
-  padding: 4px 10px;
-  border-radius: 6px;
-  white-space: nowrap;
-  letter-spacing: 0.01em;
-}
-.rating-badge-equal { background: var(--accent); }
 .claim-body { font-size: 13.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 10px; }
 .evidence-row { display: flex; flex-wrap: wrap; gap: 6px; }
 .ev-pill { font-size: 11.5px; background: var(--white); color: var(--ink-3); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--rule); }
@@ -390,7 +377,6 @@ body{font-family:var(--sans);background:#fff;color:var(--ink);font-size:11pt;lin
 .tag-strong{background:var(--green-bg);color:var(--green)}
 .tag-moderate{background:var(--amber-bg);color:var(--amber)}
 .tag-weak{background:var(--gray-bg);color:var(--gray-text)}
-.rating-badge{font-size:9pt;font-weight:500;font-family:var(--serif);background:var(--accent);color:#fff;padding:3px 9px;border-radius:5px;white-space:nowrap}
 .claim-body{font-size:9.5pt;color:var(--ink-3);line-height:1.6;margin-bottom:8px}
 .evidence-row{display:flex;flex-wrap:wrap;gap:5px}
 .ev-pill{font-size:8pt;background:var(--rule-light);color:var(--ink-3);border-radius:5px;padding:2px 8px;border:1px solid var(--rule)}
@@ -435,13 +421,6 @@ function renderReport(r) {
   const combinedMax = r.combined_rating_max || (ratingMaxes.length ? vaCombinedRating(ratingMaxes) : null);
   const hasRatings = combinedMin !== null && combinedMax !== null;
 
-  function ratingBadgeHTML(c) {
-    if (typeof c.rating_min !== 'number' || typeof c.rating_max !== 'number') return '';
-    const label = c.rating_min === c.rating_max
-      ? `${c.rating_min}%`
-      : `${c.rating_min}%&ndash;${c.rating_max}%`;
-    return `<span class="rating-badge">${label}</span>`;
-  }
 
   function claimHTML(c) {
     const pills = (c.evidence || []).map(e => `<span class="ev-pill">${esc(e)}</span>`).join('');
@@ -454,7 +433,6 @@ function renderReport(r) {
         </div>
         <div class="claim-top-right">
           <span class="strength-tag ${strengthClass(c.strength)}">${esc(c.strength)}</span>
-          ${ratingBadgeHTML(c)}
         </div>
       </div>
       <p class="claim-body">${esc(c.explanation)}</p>
