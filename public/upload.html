@@ -21,16 +21,22 @@
 }
 html { font-size: 16px; scroll-behavior: smooth; }
 body { font-family: var(--sans); background: var(--page); color: var(--ink); min-height: 100vh; line-height: 1.6; }
+
+/* Header */
 .site-header { border-bottom: 1px solid var(--rule); background: var(--white); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
-.header-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.header-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; height: 64px; }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .logo-mark { width: 36px; height: 36px; background: var(--accent); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .logo-mark svg { width: 20px; height: 20px; }
 .logo-text { font-family: var(--serif); font-size: 17px; font-weight: 400; color: var(--ink); letter-spacing: -0.01em; }
+
+/* Page body */
 .page-body { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem 5rem; }
 .page-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
 .page-heading { font-family: var(--serif); font-size: clamp(26px, 4vw, 38px); font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 10px; }
 .page-sub { font-size: 15px; color: var(--ink-3); line-height: 1.65; max-width: 540px; margin-bottom: 2.5rem; }
+
+/* Upload zone */
 .upload-zone { border: 1.5px dashed var(--rule); border-radius: 12px; background: var(--white); padding: 3rem 2rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; max-width: 620px; }
 .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: var(--accent-light); }
 .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
@@ -44,6 +50,8 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 .analyze-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .privacy-note { margin-top: 10px; font-size: 12px; color: var(--ink-4); display: flex; align-items: center; gap: 6px; max-width: 620px; }
 .privacy-note svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* Loading */
 .loading-state { display: none; padding: 3rem 0; max-width: 620px; }
 .loading-state.active { display: block; }
 .spinner-wrap { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
@@ -51,35 +59,197 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-state h3 { font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--ink); margin-bottom: 4px; text-align: center; }
 .loading-state p { font-size: 14px; color: var(--ink-4); text-align: center; }
+
+/* Error */
 .error-box { display: none; background: var(--danger-bg); border: 1px solid #e5c0c0; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; font-size: 14px; color: var(--danger); max-width: 620px; }
 .error-box.active { display: block; }
+
+/* Result section */
 .result-section { display: none; margin-top: 3rem; }
 .result-section.active { display: block; }
 .result-report-box { background: var(--white); border: 1px solid var(--rule); border-radius: 16px; padding: 2.5rem; }
+
+/* Report header */
 .report-header { border-top: 3px solid var(--ink); padding-top: 2rem; margin-bottom: 2rem; }
 .report-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
 .meta-pill { font-size: 11px; font-weight: 500; letter-spacing: 0.04em; background: var(--gray-bg); color: var(--gray-text); padding: 4px 10px; border-radius: 99px; }
 .report-header h2 { font-family: var(--serif); font-size: 28px; font-weight: 400; color: var(--ink); margin-bottom: 4px; }
 .report-date { font-size: 13px; color: var(--ink-4); }
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2.5rem; }
+
+/* Stats row */
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem; }
 .stat-card { background: var(--page); border: 1px solid var(--rule); border-radius: 10px; padding: 1rem 1.25rem; }
 .stat-num { font-family: var(--serif); font-size: 36px; font-weight: 400; color: var(--ink); line-height: 1; }
 .stat-lbl { font-size: 12px; color: var(--ink-4); margin-top: 4px; }
+
+/* ── COMBINED RATING BANNER ── */
+.combined-rating-banner {
+  background: var(--accent);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.combined-rating-left {}
+.combined-rating-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 4px;
+}
+.combined-rating-value {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1;
+}
+.combined-rating-value span {
+  font-size: 20px;
+  color: rgba(255,255,255,0.7);
+  margin-left: 4px;
+}
+.combined-rating-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 4px;
+}
+.combined-rating-disclaimer {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  max-width: 340px;
+  line-height: 1.5;
+}
+
+/* ── COLLAPSIBLE BREAKDOWN ── */
+.breakdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-family: var(--sans);
+  color: var(--ink-3);
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+.breakdown-toggle:hover { color: var(--ink); border-color: var(--ink-3); }
+.breakdown-toggle svg { width: 14px; height: 14px; transition: transform 0.2s; flex-shrink: 0; }
+.breakdown-toggle.open svg { transform: rotate(180deg); }
+.breakdown-panel {
+  display: none;
+  background: var(--page);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-top: -1.5rem;
+  margin-bottom: 2rem;
+}
+.breakdown-panel.open { display: block; }
+.breakdown-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 1rem;
+}
+.breakdown-step {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule-light);
+  font-size: 13.5px;
+}
+.breakdown-step:last-child { border-bottom: none; }
+.breakdown-step-num {
+  font-size: 11px;
+  color: var(--ink-4);
+  min-width: 20px;
+  flex-shrink: 0;
+}
+.breakdown-step-text { color: var(--ink-2); flex: 1; line-height: 1.5; }
+.breakdown-step-result {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--accent);
+  font-weight: 400;
+  flex-shrink: 0;
+  min-width: 60px;
+  text-align: right;
+}
+.breakdown-final {
+  margin-top: 10px;
+  padding: 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.breakdown-final-num {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--accent);
+}
+.breakdown-note {
+  font-size: 11.5px;
+  color: var(--ink-4);
+  margin-top: 10px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Summary box */
 .summary-box { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2.5rem; }
 .summary-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
 .summary-box p { font-size: 15px; color: var(--ink-2); line-height: 1.65; }
+
+/* Section label */
 .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin: 2rem 0 0.875rem; padding-bottom: 6px; border-bottom: 1px solid var(--rule-light); }
+
+/* Claim cards */
 .claim-card { background: var(--page); border: 1px solid var(--rule); border-radius: 10px; padding: 1.125rem 1.375rem; margin-bottom: 10px; }
 .claim-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.claim-top-left { flex: 1; }
+.claim-top-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
 .claim-title { font-family: var(--serif); font-size: 16px; font-weight: 400; color: var(--ink); line-height: 1.3; }
 .claim-dc { font-size: 11px; color: var(--ink-4); margin-top: 3px; }
-.strength-tag { flex-shrink: 0; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 99px; white-space: nowrap; }
+.strength-tag { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 99px; white-space: nowrap; }
 .tag-strong { background: var(--green-bg); color: var(--green); }
 .tag-moderate { background: var(--amber-bg); color: var(--amber); }
 .tag-weak { background: var(--gray-bg); color: var(--gray-text); }
+/* ── RATING BADGE ── */
+.rating-badge {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--serif);
+  background: var(--accent);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+.rating-badge-equal { background: var(--accent); }
 .claim-body { font-size: 13.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 10px; }
 .evidence-row { display: flex; flex-wrap: wrap; gap: 6px; }
 .ev-pill { font-size: 11.5px; background: var(--white); color: var(--ink-3); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--rule); }
+.theory-pill { font-size: 11.5px; background: var(--accent-light); color: var(--accent); border-radius: 6px; padding: 3px 9px; border: 1px solid var(--accent-light); }
+
+/* Paywall */
 .paywall-wrapper { position: relative; }
 .blurred-content { filter: blur(7px); user-select: none; pointer-events: none; }
 .paywall-gate {
@@ -107,14 +277,19 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 .pay-btn:hover { opacity: 0.88; }
 .paywall-trust { font-size: 11px; color: var(--ink-4); display: flex; align-items: center; justify-content: center; gap: 5px; }
 .paywall-trust svg { width: 11px; height: 11px; }
+
+/* Download */
 .download-btn { display: none; align-items: center; justify-content: center; gap: 10px; margin-top: 2.5rem; width: 100%; padding: 16px 24px; background: var(--accent); color: var(--white); font-family: var(--sans); font-size: 16px; font-weight: 500; border: none; border-radius: 10px; cursor: pointer; transition: opacity 0.2s; }
 .download-btn:hover { opacity: 0.88; }
 .download-notice { display: flex; align-items: flex-start; gap: 10px; background: var(--amber-bg); border: 1px solid #e8d5b0; border-radius: 8px; padding: 12px 16px; margin-top: 2rem; font-size: 13px; color: var(--amber); line-height: 1.55; }
 .download-notice svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+
 @media (max-width: 640px) {
   .page-body { padding: 2.5rem 1.25rem 3rem; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .result-report-box { padding: 1.5rem; }
+  .combined-rating-banner { flex-direction: column; gap: 1rem; }
+  .combined-rating-disclaimer { max-width: 100%; }
 }
 </style>
 </head>
@@ -128,7 +303,6 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       </div>
       <span class="logo-text">DisabilityReview</span>
     </a>
-
   </div>
 </header>
 
@@ -166,7 +340,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
     <div class="spinner-wrap">
       <div class="spinner"></div>
       <div>
-        <h3>Analyzing your record…</h3>
+        <h3>Analyzing your record&hellip;</h3>
         <p>Reviewing conditions, imaging, labs, and clinical notes against VA rating criteria.</p>
       </div>
     </div>
@@ -177,7 +351,7 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
       <div id="reportContent"></div>
       <div class="download-notice" id="downloadNotice" style="display:none;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span>Download your report before leaving this page. Because we never store your data, closing or refreshing this tab will permanently erase your results — and you would need to pay again to regenerate them.</span>
+        <span>Download your report before leaving this page. Because we never store your data, closing or refreshing this tab will permanently erase your results &mdash; and you would need to pay again to regenerate them.</span>
       </div>
       <button class="download-btn" id="downloadBtn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -205,6 +379,65 @@ const downloadBtn = document.getElementById('downloadBtn');
 let selectedFile = null;
 let currentReport = null;
 
+// ── VA Combined Rating Calculator (Whole Person Method) ──
+function vaCombinedRating(ratings) {
+  // Sort descending
+  const sorted = [...ratings].filter(r => r > 0).sort((a, b) => b - a);
+  let remaining = 100;
+  for (const r of sorted) {
+    remaining = remaining * (1 - r / 100);
+  }
+  const combined = 100 - remaining;
+  // Round to nearest 10 (VA standard)
+  return Math.round(combined / 10) * 10;
+}
+
+// ── Build step-by-step breakdown HTML ──
+function buildBreakdownHTML(claims, isMin) {
+  const validClaims = claims.filter(c => {
+    const r = isMin ? c.rating_min : c.rating_max;
+    return typeof r === 'number' && r > 0;
+  }).sort((a, b) => {
+    const ra = isMin ? a.rating_min : a.rating_max;
+    const rb = isMin ? b.rating_min : b.rating_max;
+    return rb - ra;
+  });
+
+  if (!validClaims.length) return '<p style="font-size:13px;color:var(--ink-4)">No rated claims available.</p>';
+
+  let remaining = 100;
+  let steps = '';
+  let stepNum = 1;
+
+  for (const c of validClaims) {
+    const rate = isMin ? c.rating_min : c.rating_max;
+    const portion = remaining * (rate / 100);
+    const newRemaining = remaining * (1 - rate / 100);
+    steps += `<div class="breakdown-step">
+      <span class="breakdown-step-num">${stepNum}.</span>
+      <span class="breakdown-step-text">
+        <strong>${c.title}</strong> (${rate}%) applied to ${remaining.toFixed(1)}% remaining efficiency
+        &rarr; adds ${portion.toFixed(1)}%
+      </span>
+      <span class="breakdown-step-result">${(100 - newRemaining).toFixed(1)}%</span>
+    </div>`;
+    remaining = newRemaining;
+    stepNum++;
+  }
+
+  const rawCombined = 100 - remaining;
+  const rounded = Math.round(rawCombined / 10) * 10;
+
+  steps += `<div class="breakdown-final">
+    <span>Raw combined disability: ${rawCombined.toFixed(1)}% &rarr; rounded to nearest 10%</span>
+    <span class="breakdown-final-num">${rounded}%</span>
+  </div>
+  <p class="breakdown-note">The VA rounds the final combined rating to the nearest 10% per 38 CFR §4.25. Individual ratings are applied sequentially from highest to lowest against the remaining "whole person" efficiency.</p>`;
+
+  return steps;
+}
+
+// ── Payment check ──
 (function checkPaymentReturn() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('paid') === 'true') {
@@ -261,86 +494,68 @@ analyzeBtn.addEventListener('click', async () => {
 downloadBtn.addEventListener('click', () => {
   const name = currentReport && currentReport.veteran_name ? currentReport.veteran_name : 'VA Disability Report';
   const content = document.getElementById('reportContent').innerHTML;
-
-  const printHTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>${name} — VA Disability Report</title>
+  const printHTML = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>${name} &mdash; VA Disability Report</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --ink: #1a1a18; --ink-2: #3d3d39; --ink-3: #6b6b65; --ink-4: #9a9a92;
-    --rule: #e4e2d8; --rule-light: #f0ede4; --page: #faf8f2; --white: #ffffff;
-    --accent: #1a3a5c; --accent-light: #e8eef5;
-    --green: #1a4a2e; --green-bg: #e8f2ec;
-    --amber: #5c3a0e; --amber-bg: #f5edde;
-    --gray-bg: #f0ede4; --gray-text: #5f5e58;
-    --serif: "Libre Baskerville", Georgia, serif;
-    --sans: "DM Sans", system-ui, sans-serif;
-  }
-  body { font-family: var(--sans); background: #fff; color: var(--ink); font-size: 11pt; line-height: 1.55; margin: 0; padding: 0; }
-  .print-header { display: flex; align-items: center; gap: 10px; padding: 18px 24px 14px; border-bottom: 2px solid var(--ink); margin-bottom: 24px; }
-  .print-logo-mark { width: 28px; height: 28px; background: var(--accent); border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .print-logo-mark svg { width: 16px; height: 16px; }
-  .print-logo-text { font-family: var(--serif); font-size: 13pt; font-weight: 400; color: var(--ink); }
-  .print-disclaimer { margin-left: auto; font-size: 7.5pt; color: var(--ink-4); max-width: 260px; text-align: right; line-height: 1.4; }
-  .report-header { padding: 0 24px; margin-bottom: 20px; }
-  .report-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
-  .meta-pill { font-size: 8pt; font-weight: 500; background: var(--gray-bg); color: var(--gray-text); padding: 3px 9px; border-radius: 99px; }
-  .report-header h2 { font-family: var(--serif); font-size: 22pt; font-weight: 400; color: var(--ink); margin-bottom: 3px; }
-  .report-date { font-size: 9pt; color: var(--ink-4); }
-  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 24px 20px; }
-  .stat-card { border: 1px solid var(--rule); border-radius: 8px; padding: 10px 14px; page-break-inside: avoid; }
-  .stat-num { font-family: var(--serif); font-size: 26pt; font-weight: 400; color: var(--ink); line-height: 1; }
-  .stat-lbl { font-size: 8.5pt; color: var(--ink-4); margin-top: 3px; }
-  .summary-box { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 12px 16px; margin: 0 24px 20px; border-radius: 0 6px 6px 0; page-break-inside: avoid; }
-  .summary-label { font-size: 7.5pt; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
-  .summary-box p { font-size: 10pt; color: var(--ink-2); line-height: 1.6; }
-  .section-label { font-size: 7.5pt; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin: 18px 24px 8px; padding-bottom: 5px; border-bottom: 1px solid var(--rule-light); }
-  .claim-card { border: 1px solid var(--rule); border-radius: 8px; padding: 11px 14px; margin: 0 24px 8px; page-break-inside: avoid; }
-  .claim-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
-  .claim-title { font-family: var(--serif); font-size: 11.5pt; font-weight: 400; color: var(--ink); line-height: 1.3; }
-  .claim-dc { font-size: 8pt; color: var(--ink-4); margin-top: 2px; }
-  .strength-tag { flex-shrink: 0; font-size: 8pt; font-weight: 500; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
-  .tag-strong { background: var(--green-bg); color: var(--green); }
-  .tag-moderate { background: var(--amber-bg); color: var(--amber); }
-  .tag-weak { background: var(--gray-bg); color: var(--gray-text); }
-  .claim-body { font-size: 9.5pt; color: var(--ink-3); line-height: 1.6; margin-bottom: 8px; }
-  .evidence-row { display: flex; flex-wrap: wrap; gap: 5px; }
-  .ev-pill { font-size: 8pt; background: var(--rule-light); color: var(--ink-3); border-radius: 5px; padding: 2px 8px; border: 1px solid var(--rule); }
-  .theory-pill { font-size: 8pt; background: var(--accent-light); color: var(--accent); border-radius: 5px; padding: 2px 8px; border: 1px solid var(--accent-light); }
-  .paywall-wrapper, .paywall-gate, .paywall-card { display: none !important; }
-  .blurred-content { filter: none !important; }
-  @page { size: letter; margin: 0; }
-  @media print {
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .claim-card, .stat-card, .summary-box { page-break-inside: avoid; }
-  }
-</style>
-</head>
-<body>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1a18;--ink-2:#3d3d39;--ink-3:#6b6b65;--ink-4:#9a9a92;--rule:#e4e2d8;--rule-light:#f0ede4;--page:#faf8f2;--white:#fff;--accent:#1a3a5c;--accent-light:#e8eef5;--green:#1a4a2e;--green-bg:#e8f2ec;--amber:#5c3a0e;--amber-bg:#f5edde;--gray-bg:#f0ede4;--gray-text:#5f5e58;--serif:"Libre Baskerville",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif}
+body{font-family:var(--sans);background:#fff;color:var(--ink);font-size:11pt;line-height:1.55;margin:0;padding:0}
+.print-header{display:flex;align-items:center;gap:10px;padding:18px 24px 14px;border-bottom:2px solid var(--ink);margin-bottom:24px}
+.print-logo-mark{width:28px;height:28px;background:var(--accent);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.print-logo-mark svg{width:16px;height:16px}
+.print-logo-text{font-family:var(--serif);font-size:13pt;font-weight:400;color:var(--ink)}
+.print-disclaimer{margin-left:auto;font-size:7.5pt;color:var(--ink-4);max-width:260px;text-align:right;line-height:1.4}
+.report-header{padding:0 24px;margin-bottom:20px}
+.report-meta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.meta-pill{font-size:8pt;font-weight:500;background:var(--gray-bg);color:var(--gray-text);padding:3px 9px;border-radius:99px}
+.report-header h2{font-family:var(--serif);font-size:22pt;font-weight:400;color:var(--ink);margin-bottom:3px}
+.report-date{font-size:9pt;color:var(--ink-4)}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 24px 16px}
+.stat-card{border:1px solid var(--rule);border-radius:8px;padding:10px 14px;page-break-inside:avoid}
+.stat-num{font-family:var(--serif);font-size:26pt;font-weight:400;color:var(--ink);line-height:1}
+.stat-lbl{font-size:8.5pt;color:var(--ink-4);margin-top:3px}
+.combined-rating-banner{background:var(--accent);border-radius:10px;padding:14px 18px;margin:0 24px 18px;display:flex;align-items:center;justify-content:space-between;gap:1rem;page-break-inside:avoid}
+.combined-rating-label{font-size:7pt;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:3px}
+.combined-rating-value{font-family:var(--serif);font-size:28pt;font-weight:400;color:#fff;line-height:1}
+.combined-rating-value span{font-size:14pt;color:rgba(255,255,255,0.65);margin-left:3px}
+.combined-rating-sub{font-size:8pt;color:rgba(255,255,255,0.55);margin-top:2px}
+.combined-rating-disclaimer{font-size:8pt;color:rgba(255,255,255,0.5);max-width:260px;line-height:1.4}
+.summary-box{background:var(--accent-light);border-left:3px solid var(--accent);padding:12px 16px;margin:0 24px 18px;border-radius:0 6px 6px 0;page-break-inside:avoid}
+.summary-label{font-size:7.5pt;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.summary-box p{font-size:10pt;color:var(--ink-2);line-height:1.6}
+.section-label{font-size:7.5pt;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-4);margin:16px 24px 8px;padding-bottom:5px;border-bottom:1px solid var(--rule-light)}
+.claim-card{border:1px solid var(--rule);border-radius:8px;padding:11px 14px;margin:0 24px 8px;page-break-inside:avoid}
+.claim-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px}
+.claim-top-left{flex:1}
+.claim-top-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.claim-title{font-family:var(--serif);font-size:11.5pt;font-weight:400;color:var(--ink);line-height:1.3}
+.claim-dc{font-size:8pt;color:var(--ink-4);margin-top:2px}
+.strength-tag{font-size:8pt;font-weight:500;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.tag-strong{background:var(--green-bg);color:var(--green)}
+.tag-moderate{background:var(--amber-bg);color:var(--amber)}
+.tag-weak{background:var(--gray-bg);color:var(--gray-text)}
+.rating-badge{font-size:9pt;font-weight:500;font-family:var(--serif);background:var(--accent);color:#fff;padding:3px 9px;border-radius:5px;white-space:nowrap}
+.claim-body{font-size:9.5pt;color:var(--ink-3);line-height:1.6;margin-bottom:8px}
+.evidence-row{display:flex;flex-wrap:wrap;gap:5px}
+.ev-pill{font-size:8pt;background:var(--rule-light);color:var(--ink-3);border-radius:5px;padding:2px 8px;border:1px solid var(--rule)}
+.theory-pill{font-size:8pt;background:var(--accent-light);color:var(--accent);border-radius:5px;padding:2px 8px;border:1px solid var(--accent-light)}
+.paywall-wrapper,.paywall-gate,.paywall-card,.breakdown-toggle,.breakdown-panel{display:none!important}
+.blurred-content{filter:none!important}
+@page{size:letter;margin:0}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}.claim-card,.stat-card,.summary-box,.combined-rating-banner{page-break-inside:avoid}}
+</style></head><body>
 <div class="print-header">
-  <div class="print-logo-mark">
-    <svg viewBox="0 0 20 20" fill="none"><path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" fill="white" opacity="0.9"/></svg>
-  </div>
+  <div class="print-logo-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" fill="white" opacity="0.9"/></svg></div>
   <span class="print-logo-text">DisabilityReview</span>
   <span class="print-disclaimer">This report is for informational purposes only and does not constitute legal or medical advice. Based on 38 CFR Part 4.</span>
 </div>
 ${content}
-</body>
-</html>`;
-
+</body></html>`;
   const win = window.open('', '_blank');
   win.document.write(printHTML);
   win.document.close();
-  win.onload = () => {
-    setTimeout(() => {
-      win.focus();
-      win.print();
-    }, 800);
-  };
+  win.onload = () => { setTimeout(() => { win.focus(); win.print(); }, 800); };
 });
 
 function showError(msg) { errorBox.textContent = msg; errorBox.classList.add('active'); }
@@ -358,13 +573,34 @@ function renderReport(r, unlocked) {
   const moderate = claims.filter(c => c.strength === 'Moderate');
   const weak = claims.filter(c => c.strength === 'Weak');
 
+  // Calculate combined ratings
+  const ratingMins = claims.map(c => c.rating_min || 0).filter(v => v > 0);
+  const ratingMaxes = claims.map(c => c.rating_max || 0).filter(v => v > 0);
+  const combinedMin = r.combined_rating_min || (ratingMins.length ? vaCombinedRating(ratingMins) : null);
+  const combinedMax = r.combined_rating_max || (ratingMaxes.length ? vaCombinedRating(ratingMaxes) : null);
+  const hasRatings = combinedMin !== null && combinedMax !== null;
+
+  function ratingBadgeHTML(c) {
+    if (typeof c.rating_min !== 'number' || typeof c.rating_max !== 'number') return '';
+    const label = c.rating_min === c.rating_max
+      ? `${c.rating_min}%`
+      : `${c.rating_min}%&ndash;${c.rating_max}%`;
+    return `<span class="rating-badge">${label}</span>`;
+  }
+
   function claimHTML(c) {
     const pills = (c.evidence || []).map(e => `<span class="ev-pill">${esc(e)}</span>`).join('');
-    const theory = c.service_connection_theory ? `<span class="ev-pill" style="background:var(--accent-light);color:var(--accent);border-color:var(--accent-light)">${esc(c.service_connection_theory)}</span>` : '';
+    const theory = c.service_connection_theory ? `<span class="theory-pill">${esc(c.service_connection_theory)}</span>` : '';
     return `<div class="claim-card">
       <div class="claim-top">
-        <div><div class="claim-title">${esc(c.title)}</div><div class="claim-dc">${esc(c.diagnostic_code||'')}</div></div>
-        <span class="strength-tag ${strengthClass(c.strength)}">${esc(c.strength)}</span>
+        <div class="claim-top-left">
+          <div class="claim-title">${esc(c.title)}</div>
+          <div class="claim-dc">${esc(c.diagnostic_code||'')}</div>
+        </div>
+        <div class="claim-top-right">
+          <span class="strength-tag ${strengthClass(c.strength)}">${esc(c.strength)}</span>
+          ${ratingBadgeHTML(c)}
+        </div>
       </div>
       <p class="claim-body">${esc(c.explanation)}</p>
       <div class="evidence-row">${theory}${pills}</div>
@@ -378,6 +614,34 @@ function renderReport(r, unlocked) {
 
   const metaPills = [r.branch, r.mos, r.record_period, r.facility].filter(Boolean)
     .map(v => `<span class="meta-pill">${esc(v)}</span>`).join('');
+
+  // Combined rating banner
+  const combinedBanner = hasRatings ? `
+    <div class="combined-rating-banner">
+      <div class="combined-rating-left">
+        <div class="combined-rating-label">Estimated combined disability rating</div>
+        <div class="combined-rating-value">
+          ${combinedMin === combinedMax ? `${combinedMin}%` : `${combinedMin}%<span>&ndash;${combinedMax}%</span>`}
+        </div>
+        <div class="combined-rating-sub">Based on ${claims.filter(c => c.rating_min > 0 || c.rating_max > 0).length} rated conditions &middot; VA whole-person method (38 CFR &sect;4.25)</div>
+      </div>
+      <div class="combined-rating-disclaimer">Range reflects minimum and maximum plausible ratings contingent on C&amp;P exam findings. Actual award depends on examiner determinations.</div>
+    </div>
+    <button class="breakdown-toggle" id="breakdownToggle" onclick="toggleBreakdown()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+      How this rating was calculated
+    </button>
+    <div class="breakdown-panel" id="breakdownPanel">
+      <div class="breakdown-title">Step-by-step &mdash; VA whole-person method (showing min &rarr; max range)</div>
+      <div style="margin-bottom:1rem">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:6px">Conservative estimate (${combinedMin}%)</div>
+        ${buildBreakdownHTML(claims, true)}
+      </div>
+      ${combinedMin !== combinedMax ? `<div>
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:6px;margin-top:1rem">Optimistic estimate (${combinedMax}%)</div>
+        ${buildBreakdownHTML(claims, false)}
+      </div>` : ''}
+    </div>` : '';
 
   const bodyHTML =
     (r.summary ? `<div class="summary-box"><div class="summary-label">Key findings</div><p>${esc(r.summary)}</p></div>` : '') +
@@ -395,7 +659,8 @@ function renderReport(r, unlocked) {
       <div class="stat-card"><div class="stat-num">${r.total_claims||claims.length}</div><div class="stat-lbl">Potential claims identified</div></div>
       <div class="stat-card"><div class="stat-num">${r.strong_count||strong.length}</div><div class="stat-lbl">Strong service connections</div></div>
       <div class="stat-card"><div class="stat-num">${(r.moderate_count||moderate.length)+(r.weak_count||weak.length)}</div><div class="stat-lbl">Supporting or secondary</div></div>
-    </div>`;
+    </div>
+    ${combinedBanner}`;
 
   if (unlocked) {
     reportContent.innerHTML = header + bodyHTML;
@@ -409,11 +674,11 @@ function renderReport(r, unlocked) {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
           <h3>Your full report is ready</h3>
-          <p class="paywall-desc">Unlock your complete VA disability analysis — every claim, evidence item, and diagnostic code mapped to your record.</p>
+          <p class="paywall-desc">Unlock your complete VA disability analysis &mdash; every claim, evidence item, diagnostic code, and estimated rating mapped to your record.</p>
           <div class="paywall-includes">
-            <div class="include-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>All ${claims.length} potential claims with full explanations</div>
+            <div class="include-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>All ${claims.length} potential claims with individual rating ranges</div>
+            <div class="include-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>Estimated combined disability percentage</div>
             <div class="include-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>VA Diagnostic Codes &amp; CFR citations</div>
-            <div class="include-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>Supporting evidence from your record</div>
             <div class="include-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>Downloadable PDF report</div>
           </div>
           <div class="paywall-price">
@@ -429,6 +694,16 @@ function renderReport(r, unlocked) {
       </div>
     </div>`;
   }
+}
+
+function toggleBreakdown() {
+  const btn = document.getElementById('breakdownToggle');
+  const panel = document.getElementById('breakdownPanel');
+  if (!btn || !panel) return;
+  btn.classList.toggle('open');
+  panel.classList.toggle('open');
+  btn.querySelector('span') && (btn.querySelector('span').textContent =
+    panel.classList.contains('open') ? 'Hide calculation' : 'How this rating was calculated');
 }
 </script>
 </body>
