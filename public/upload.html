@@ -128,89 +128,20 @@ body { font-family: var(--sans); background: var(--page); color: var(--ink); min
 }
 
 /* ── COLLAPSIBLE BREAKDOWN ── */
-.breakdown-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: none;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 9px 14px;
-  font-size: 13px;
-  font-family: var(--sans);
-  color: var(--ink-3);
-  cursor: pointer;
-  margin-bottom: 2rem;
-  transition: color 0.15s, border-color 0.15s;
-}
-.breakdown-toggle:hover { color: var(--ink); border-color: var(--ink-3); }
-.breakdown-toggle svg { width: 14px; height: 14px; transition: transform 0.2s; flex-shrink: 0; }
-.breakdown-toggle.open svg { transform: rotate(180deg); }
-.breakdown-panel {
-  display: none;
-  background: var(--page);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  padding: 1.25rem 1.5rem;
-  margin-top: -1.5rem;
-  margin-bottom: 2rem;
-}
-.breakdown-panel.open { display: block; }
-.breakdown-title {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-4);
-  margin-bottom: 1rem;
-}
-.breakdown-step {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--rule-light);
-  font-size: 13.5px;
-}
-.breakdown-step:last-child { border-bottom: none; }
-.breakdown-step-num {
-  font-size: 11px;
-  color: var(--ink-4);
-  min-width: 20px;
-  flex-shrink: 0;
-}
-.breakdown-step-text { color: var(--ink-2); flex: 1; line-height: 1.5; }
-.breakdown-step-result {
-  font-family: var(--serif);
-  font-size: 15px;
-  color: var(--accent);
-  font-weight: 400;
-  flex-shrink: 0;
-  min-width: 60px;
-  text-align: right;
-}
-.breakdown-final {
-  margin-top: 10px;
-  padding: 10px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ink);
-}
-.breakdown-final-num {
-  font-family: var(--serif);
-  font-size: 18px;
-  color: var(--accent);
-}
-.breakdown-note {
-  font-size: 11.5px;
-  color: var(--ink-4);
-  margin-top: 10px;
-  line-height: 1.5;
-  font-style: italic;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Summary box */
 .summary-box { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2.5rem; }
@@ -392,50 +323,6 @@ function vaCombinedRating(ratings) {
   return Math.round(combined / 10) * 10;
 }
 
-// ── Build step-by-step breakdown HTML ──
-function buildBreakdownHTML(claims, isMin) {
-  const validClaims = claims.filter(c => {
-    const r = isMin ? c.rating_min : c.rating_max;
-    return typeof r === 'number' && r > 0;
-  }).sort((a, b) => {
-    const ra = isMin ? a.rating_min : a.rating_max;
-    const rb = isMin ? b.rating_min : b.rating_max;
-    return rb - ra;
-  });
-
-  if (!validClaims.length) return '<p style="font-size:13px;color:var(--ink-4)">No rated claims available.</p>';
-
-  let remaining = 100;
-  let steps = '';
-  let stepNum = 1;
-
-  for (const c of validClaims) {
-    const rate = isMin ? c.rating_min : c.rating_max;
-    const portion = remaining * (rate / 100);
-    const newRemaining = remaining * (1 - rate / 100);
-    steps += `<div class="breakdown-step">
-      <span class="breakdown-step-num">${stepNum}.</span>
-      <span class="breakdown-step-text">
-        <strong>${c.title}</strong> (${rate}%) applied to ${remaining.toFixed(1)}% remaining efficiency
-        &rarr; adds ${portion.toFixed(1)}%
-      </span>
-      <span class="breakdown-step-result">${(100 - newRemaining).toFixed(1)}%</span>
-    </div>`;
-    remaining = newRemaining;
-    stepNum++;
-  }
-
-  const rawCombined = 100 - remaining;
-  const rounded = Math.round(rawCombined / 10) * 10;
-
-  steps += `<div class="breakdown-final">
-    <span>Raw combined disability: ${rawCombined.toFixed(1)}% &rarr; rounded to nearest 10%</span>
-    <span class="breakdown-final-num">${rounded}%</span>
-  </div>
-  <p class="breakdown-note">The VA rounds the final combined rating to the nearest 10% per 38 CFR §4.25. Individual ratings are applied sequentially from highest to lowest against the remaining "whole person" efficiency.</p>`;
-
-  return steps;
-}
 
 // ── Payment check ──
 (function checkPaymentReturn() {
@@ -540,7 +427,7 @@ body{font-family:var(--sans);background:#fff;color:var(--ink);font-size:11pt;lin
 .evidence-row{display:flex;flex-wrap:wrap;gap:5px}
 .ev-pill{font-size:8pt;background:var(--rule-light);color:var(--ink-3);border-radius:5px;padding:2px 8px;border:1px solid var(--rule)}
 .theory-pill{font-size:8pt;background:var(--accent-light);color:var(--accent);border-radius:5px;padding:2px 8px;border:1px solid var(--accent-light)}
-.paywall-wrapper,.paywall-gate,.paywall-card,.breakdown-toggle,.breakdown-panel{display:none!important}
+.paywall-wrapper,.paywall-gate,.paywall-card{display:none!important}
 .blurred-content{filter:none!important}
 @page{size:letter;margin:0}
 @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}.claim-card,.stat-card,.summary-box,.combined-rating-banner{page-break-inside:avoid}}
@@ -627,20 +514,7 @@ function renderReport(r, unlocked) {
       </div>
       <div class="combined-rating-disclaimer">Range reflects minimum and maximum plausible ratings contingent on C&amp;P exam findings. Actual award depends on examiner determinations.</div>
     </div>
-    <button class="breakdown-toggle" id="breakdownToggle" onclick="toggleBreakdown()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
-      How this rating was calculated
-    </button>
-    <div class="breakdown-panel" id="breakdownPanel">
-      <div class="breakdown-title">Step-by-step &mdash; VA whole-person method (showing min &rarr; max range)</div>
-      <div style="margin-bottom:1rem">
-        <div style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:6px">Conservative estimate (${combinedMin}%)</div>
-        ${buildBreakdownHTML(claims, true)}
-      </div>
-      ${combinedMin !== combinedMax ? `<div>
-        <div style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:6px;margin-top:1rem">Optimistic estimate (${combinedMax}%)</div>
-        ${buildBreakdownHTML(claims, false)}
-      </div>` : ''}
+    ` : ''}
     </div>` : '';
 
   const bodyHTML =
@@ -696,15 +570,6 @@ function renderReport(r, unlocked) {
   }
 }
 
-function toggleBreakdown() {
-  const btn = document.getElementById('breakdownToggle');
-  const panel = document.getElementById('breakdownPanel');
-  if (!btn || !panel) return;
-  btn.classList.toggle('open');
-  panel.classList.toggle('open');
-  btn.querySelector('span') && (btn.querySelector('span').textContent =
-    panel.classList.contains('open') ? 'Hide calculation' : 'How this rating was calculated');
-}
 </script>
 </body>
 </html>
